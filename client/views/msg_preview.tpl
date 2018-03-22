@@ -23,10 +23,20 @@
 				<img src="{{thumb}}" decoding="async" alt="" class="thumb">
 			</a>
 		{{/if}}
-		<a class="toggle-text" href="{{link}}" target="_blank" rel="noopener">
-			<div class="head" title="{{head}}">{{head}}</div>
-			<div class="body" title="{{body}}">{{body}}</div>
-		</a>
+		<div class="toggle-text-container">
+			<button class="more"
+				aria-expanded="false"
+				data-closed-text="More"
+				data-opened-text="Less"
+			>
+				<span class="more-caret"></span>
+			</button>
+
+			<a class="toggle-text" href="{{link}}" target="_blank" rel="noopener">
+				<div class="head" title="{{head}}">{{head}}</div>
+				<div class="body" title="{{body}}">{{body}}</div>
+			</a>
+		</div>
 	{{/equal}}
 	{{#equal type "error"}}
 		{{#equal error "image-too-big"}}

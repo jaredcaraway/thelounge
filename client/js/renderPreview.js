@@ -66,6 +66,15 @@ function appendPreview(preview, msg, template) {
 
 	previewContainer.append(template);
 
+	const head = previewContainer.find(".head")[0];
+	const body = previewContainer.find(".body")[0];
+
+	if (preview.type === "link" &&
+			head.offsetWidth >= head.scrollWidth &&
+			body.offsetWidth >= body.scrollWidth) {
+		previewContainer.find(".more").hide();
+	}
+
 	if (activeChannelId === channelId) {
 		container.trigger("keepToBottom");
 	}
@@ -95,6 +104,11 @@ $("#chat").on("click", ".text .toggle-button", function() {
 	if (bottom) {
 		container.scrollBottom();
 	}
+});
+
+$("#chat").on("click", ".toggle-content .more", function() {
+	$(this).closest(".toggle-text-container").toggleClass("opened");
+	return false;
 });
 
 /* Image viewer */

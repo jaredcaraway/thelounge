@@ -244,6 +244,7 @@ kbd {
 #chat .nick .from::before,
 #chat .action .from::before,
 #chat .toggle-button::after,
+#chat .toggle-text-container .more-caret::before,
 #version-checker::before,
 .context-menu-item::before,
 #help .website-link::before,
@@ -1344,26 +1345,30 @@ kbd {
 	color: #f00;
 }
 
+#chat .toggle-text-container.opened .more-caret, /* Expand/Collapse link previews */
 #chat .toggle-button.opened, /* Thumbnail toggle */
 #chat .msg.condensed:not(.closed) .toggle-button { /* Expanded status message toggle */
 	transform: rotate(90deg);
 }
 
 #chat .toggle-content {
-	background: #f5f5f5;
-	border-radius: 2px;
+	background: #f6f6f6;
+	border-radius: 5px;
 	display: none;
-	color: #222;
 	max-width: 100%;
 	margin: 0;
 	margin-top: 6px;
 	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	contain: content; /* This fixes a display bug where border-radius stopped working on image link hover */
 }
 
 #chat .toggle-type-error {
 	background: transparent;
+	box-shadow: none;
 }
 
+/* This applies to images of preview-type-image and thumbnails of preview-type-link */
 #chat .toggle-content img {
 	max-width: 100%;
 	max-height: 128px;
@@ -1374,45 +1379,74 @@ kbd {
 	display: none;
 }
 
+/* This applies to thumbnails of preview-type-link only */
 #chat .toggle-content .thumb {
-	max-width: 48px;
-	max-height: 38px;
+	max-width: 100px;
+	max-height: 54px;
 }
 
-#chat .toggle-thumbnail {
-	padding: 6px;
+#chat .toggle-text-container {
+	overflow: hidden;
+	padding: 8px;
+}
+
+#chat .toggle-text-container .more {
+	color: #50a656;
+	float: right;
+	margin-left: 8px;
+}
+
+#chat .toggle-text-container .more-caret {
+	display: inline-block;
+	transition: transform 0.2s;
+}
+
+#chat .toggle-text-container .more-caret::before {
+	content: "\f0da"; /* https://fontawesome.com/icons/caret-right?style=solid */
+}
+
+#chat .toggle-text-container .more::after {
+	content: attr(data-closed-text);
+}
+
+#chat .toggle-text-container.opened .more::after {
+	content: attr(data-opened-text);
 }
 
 #chat .toggle-text {
-	padding: 6px;
 	min-width: 0;
-	display: flex;
-	flex-direction: column;
 	white-space: nowrap;
-	color: inherit;
 }
 
-#chat .toggle-text:not(:first-child) {
-	padding-left: 0;
+#chat .toggle-text-container.opened .toggle-text {
+	white-space: normal;
 }
 
-#chat .toggle-content .head,
-#chat .toggle-content .body {
-	text-overflow: ellipsis;
+#chat .toggle-text-container .head,
+#chat .toggle-text-container .body {
+	-webkit-mask-image: linear-gradient(to left, transparent, black 20px);
+	mask-image: linear-gradient(to left, transparent, black 20px);
 	overflow: hidden;
-	color: inherit;
+}
+
+#chat .toggle-text-container.opened .head,
+#chat .toggle-text-container.opened .body {
+	-webkit-mask-image: none;
+	mask-image: none;
 }
 
 #chat .toggle-content .head {
 	font-weight: bold;
+	color: #222;
 }
 
 #chat .toggle-content .body {
-	color: #999;
+	color: #727272;
 }
 
 #chat .toggle-content.show {
 	display: inline-flex !important;
+	align-items: flex-start;
 }
 
 #chat audio {
