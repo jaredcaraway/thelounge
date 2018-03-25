@@ -244,7 +244,7 @@ kbd {
 #chat .nick .from::before,
 #chat .action .from::before,
 #chat .toggle-button::after,
-#chat .toggle-text-container .more-caret::before,
+#chat .toggle-text .more-caret::before,
 #version-checker::before,
 .context-menu-item::before,
 #help .website-link::before,
@@ -1345,7 +1345,7 @@ kbd {
 	color: #f00;
 }
 
-#chat .toggle-text-container.opened .more-caret, /* Expand/Collapse link previews */
+#chat .toggle-text.opened .more-caret, /* Expand/Collapse link previews */
 #chat .toggle-button.opened, /* Thumbnail toggle */
 #chat .msg.condensed:not(.closed) .toggle-button { /* Expanded status message toggle */
 	transform: rotate(90deg);
@@ -1373,6 +1373,7 @@ kbd {
 	max-width: 100%;
 	max-height: 128px;
 	display: block;
+	cursor: zoom-in;
 }
 
 #chat .prefetch-error {
@@ -1381,67 +1382,71 @@ kbd {
 
 /* This applies to thumbnails of preview-type-link only */
 #chat .toggle-content .thumb {
-	max-width: 100px;
 	max-height: 54px;
-}
-
-#chat .toggle-text-container {
-	overflow: hidden;
-	padding: 8px;
-}
-
-#chat .toggle-text-container .more {
-	color: #50a656;
-	float: right;
-	margin-left: 8px;
-}
-
-#chat .toggle-text-container .more-caret {
-	display: inline-block;
-	transition: transform 0.2s;
-}
-
-#chat .toggle-text-container .more-caret::before {
-	content: "\f0da"; /* https://fontawesome.com/icons/caret-right?style=solid */
-}
-
-#chat .toggle-text-container .more::after {
-	content: attr(data-closed-text);
-}
-
-#chat .toggle-text-container.opened .more::after {
-	content: attr(data-opened-text);
+	max-width: 96px;
 }
 
 #chat .toggle-text {
-	min-width: 0;
 	white-space: nowrap;
+	overflow: hidden;
+	padding: 8px 10px;
 }
 
-#chat .toggle-text-container.opened .toggle-text {
+#chat .toggle-text.opened {
 	white-space: normal;
 }
 
-#chat .toggle-text-container .head,
-#chat .toggle-text-container .body {
-	-webkit-mask-image: linear-gradient(to left, transparent, black 20px);
-	mask-image: linear-gradient(to left, transparent, black 20px);
-	overflow: hidden;
-}
-
-#chat .toggle-text-container.opened .head,
-#chat .toggle-text-container.opened .body {
-	-webkit-mask-image: none;
-	mask-image: none;
-}
-
-#chat .toggle-content .head {
+#chat .toggle-text .head {
+	display: flex;
+	align-items: flex-start;
 	font-weight: bold;
 	color: #222;
 }
 
-#chat .toggle-content .body {
+#chat .toggle-text .body {
 	color: #727272;
+}
+
+#chat .toggle-text a {
+	color: inherit;
+}
+
+#chat .toggle-text .overflowable {
+	/* -webkit-mask-image: linear-gradient(to left, transparent, black 10px);
+	mask-image: linear-gradient(to left, transparent, black 10px); */
+	text-overflow: ellipsis;
+	overflow: hidden;
+	flex-grow: 1;
+}
+
+#chat .toggle-text.opened .overflowable {
+	/* -webkit-mask-image: none;
+	mask-image: none; */
+}
+
+#chat .toggle-text .more {
+	color: #50a656;
+	font-weight: normal;
+	margin-left: 10px;
+	flex-shrink: 0;
+	display: none;
+}
+
+#chat .toggle-text .more::after {
+	content: attr(data-closed-text);
+}
+
+#chat .toggle-text.opened .more::after {
+	content: attr(data-opened-text);
+}
+
+#chat .toggle-text .more-caret {
+	display: inline-block;
+	transition: transform 0.2s;
+}
+
+#chat .toggle-text .more-caret::before {
+	content: "\f0da"; /* https://fontawesome.com/icons/caret-right?style=solid */
 }
 
 #chat .toggle-content.show {
@@ -2373,6 +2378,11 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 
 	#chat .header .title {
 		padding-left: 6px;
+	}
+
+	#chat .toggle-content .thumb {
+		max-height: 58px;
+		max-width: 104px;
 	}
 }
 

@@ -373,6 +373,11 @@ $(function() {
 			if (!keepSidebarOpen && $(window).outerWidth() < utils.mobileViewportPixels) {
 				slideoutMenu.toggle(false);
 			}
+
+			// Force handling preview display
+			window.requestAnimationFrame(() => {
+				$(window).trigger("resize");
+			});
 		}
 
 		const lastActive = $("#windows > .active");

@@ -23,18 +23,28 @@
 				<img src="{{thumb}}" decoding="async" alt="" class="thumb">
 			</a>
 		{{/if}}
-		<div class="toggle-text-container">
-			<button class="more"
-				aria-expanded="false"
-				data-closed-text="More"
-				data-opened-text="Less"
-			>
-				<span class="more-caret"></span>
-			</button>
+		<div class="toggle-text">
+			<div class="head">
+				<div class="overflowable">
+					<a href="{{link}}" target="_blank" rel="noopener" title="{{head}}">
+						{{head}}
+					</a>
+				</div>
 
-			<a class="toggle-text" href="{{link}}" target="_blank" rel="noopener">
-				<div class="head" title="{{head}}">{{head}}</div>
-				<div class="body" title="{{body}}">{{body}}</div>
+				<button class="more"
+					aria-expanded="false"
+					data-closed-text="More"
+					data-opened-text="Less"
+					>
+					<span class="more-caret"></span>
+				</button>
+			</div>
+
+			<div class="body overflowable">
+				<a href="{{link}}" target="_blank" rel="noopener" title="{{body}}">
+					{{body}}
+				</a>
+			</div>
 			</a>
 		</div>
 	{{/equal}}

@@ -66,14 +66,22 @@ function appendPreview(preview, msg, template) {
 
 	previewContainer.append(template);
 
-	const head = previewContainer.find(".head")[0];
-	const body = previewContainer.find(".body")[0];
+	const showMoreIfNeeded = () => {
+		const head = previewContainer.find(".head .overflowable")[0];
+		const body = previewContainer.find(".body.overflowable")[0];
 
-	if (preview.type === "link" &&
-			head.offsetWidth >= head.scrollWidth &&
-			body.offsetWidth >= body.scrollWidth) {
-		previewContainer.find(".more").hide();
-	}
+		if (preview.type === "link" &&
+				(head && head.scrollWidth > head.offsetWidth) ||
+				(body && body.scrollWidth > body.offsetWidth)) {
+			previewContainer.find(".more").show();
+		} else {
+			previewContainer.find(".toggle-text").removeClass("opened");
+			previewContainer.find(".more").hide();
+		}
+	};
+
+	$(window).bind("resize", showMoreIfNeeded);
+	window.requestAnimationFrame(showMoreIfNeeded);
 
 	if (activeChannelId === channelId) {
 		container.trigger("keepToBottom");
@@ -107,7 +115,7 @@ $("#chat").on("click", ".text .toggle-button", function() {
 });
 
 $("#chat").on("click", ".toggle-content .more", function() {
-	$(this).closest(".toggle-text-container").toggleClass("opened");
+	$(this).closest(".toggle-text").toggleClass("opened");
 	return false;
 });
 
