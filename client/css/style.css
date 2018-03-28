@@ -244,7 +244,7 @@ kbd {
 #chat .nick .from::before,
 #chat .action .from::before,
 #chat .toggle-button::after,
-#chat .toggle-text .more-caret::before,
+#chat .toggle-content .more-caret::before,
 #version-checker::before,
 .context-menu-item::before,
 #help .website-link::before,
@@ -1345,7 +1345,7 @@ kbd {
 	color: #f00;
 }
 
-#chat .toggle-text.opened .more-caret, /* Expand/Collapse link previews */
+#chat .toggle-content.opened .more-caret, /* Expand/Collapse link previews */
 #chat .toggle-button.opened, /* Thumbnail toggle */
 #chat .msg.condensed:not(.closed) .toggle-button { /* Expanded status message toggle */
 	transform: rotate(90deg);
@@ -1363,11 +1363,6 @@ kbd {
 	contain: content; /* This fixes a display bug where border-radius stopped working on image link hover */
 }
 
-#chat .toggle-type-error {
-	background: transparent;
-	box-shadow: none;
-}
-
 /* This applies to images of preview-type-image and thumbnails of preview-type-link */
 #chat .toggle-content img {
 	max-width: 100%;
@@ -1376,8 +1371,19 @@ kbd {
 	cursor: zoom-in;
 }
 
-#chat .prefetch-error {
+#chat .toggle-content pre.prefetch-error {
+	padding: 0;
+	margin: 0;
+	color: inherit;
+	background-color: transparent;
+}
+
+#chat .toggle-content .prefetch-error {
 	display: none;
+}
+
+#chat .toggle-content.opened .prefetch-error {
+	display: inline;
 }
 
 /* This applies to thumbnails of preview-type-link only */
@@ -1386,25 +1392,30 @@ kbd {
 	max-width: 96px;
 }
 
-#chat .toggle-text {
-	white-space: nowrap;
-	overflow: hidden;
+#chat .toggle-type-error,
+#chat .toggle-content .toggle-text {
 	padding: 8px 10px;
 }
 
-#chat .toggle-text.opened {
+#chat .toggle-content .toggle-text {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#chat .toggle-content.opened .toggle-text {
 	white-space: normal;
 }
 
-#chat .toggle-text .head {
+#chat .toggle-content .head {
 	display: flex;
 	align-items: flex-start;
 	font-weight: bold;
 	color: #222;
 }
 
+#chat .toggle-type-error,
 #chat .toggle-text .body {
-	color: #727272;
+	color: #717171;
 }
 
 #chat .toggle-text a {
@@ -1412,40 +1423,32 @@ kbd {
 }
 
 #chat .toggle-text .overflowable {
-	/* -webkit-mask-image: linear-gradient(to left, transparent, black 10px);
-	mask-image: linear-gradient(to left, transparent, black 10px); */
 	text-overflow: ellipsis;
 	overflow: hidden;
 	flex-grow: 1;
 }
 
-#chat .toggle-text.opened .overflowable {
-	/* -webkit-mask-image: none;
-	mask-image: none; */
-}
-
-#chat .toggle-text .more {
+#chat .toggle-content .more {
 	color: #50a656;
 	font-weight: normal;
 	margin-left: 10px;
 	flex-shrink: 0;
-	display: none;
 }
 
-#chat .toggle-text .more::after {
+#chat .toggle-content .more::after {
 	content: attr(data-closed-text);
 }
 
-#chat .toggle-text.opened .more::after {
+#chat .toggle-content.opened .more::after {
 	content: attr(data-opened-text);
 }
 
-#chat .toggle-text .more-caret {
+#chat .toggle-content .more-caret {
 	display: inline-block;
 	transition: transform 0.2s;
 }
 
-#chat .toggle-text .more-caret::before {
+#chat .toggle-content .more-caret::before {
 	content: "\f0da"; /* https://fontawesome.com/icons/caret-right?style=solid */
 }
 

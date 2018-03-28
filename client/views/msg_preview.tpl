@@ -35,7 +35,7 @@
 					aria-expanded="false"
 					data-closed-text="More"
 					data-opened-text="Less"
-					>
+				>
 					<span class="more-caret"></span>
 				</button>
 			</div>
@@ -58,12 +58,23 @@
 			</em>
 		{{/equal}}
 		{{#equal error "message"}}
-			<em>
-				There was an error loading preview for this link.
-				<a href="{{link}}" target="_blank" rel="noopener">Click here</a>
-				to open it in a new window.
-				<small class="prefetch-error">({{message}})</small>
-			</em>
+			<div>
+				<em>
+					A preview could not be loaded.
+					<a href="{{link}}" target="_blank" rel="noopener">Click here</a>
+					to open it in a new window.
+				</em>
+				<br>
+				<pre class="prefetch-error">{{message}}</pre>
+			</div>
+
+			<button class="more"
+				aria-expanded="false"
+				data-closed-text="More"
+				data-opened-text="Less"
+			>
+				<span class="more-caret"></span>
+			</button>
 		{{/equal}}
 	{{/equal}}
 </div>

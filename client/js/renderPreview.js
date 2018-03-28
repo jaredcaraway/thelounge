@@ -67,16 +67,17 @@ function appendPreview(preview, msg, template) {
 	previewContainer.append(template);
 
 	const showMoreIfNeeded = () => {
-		const head = previewContainer.find(".head .overflowable")[0];
-		const body = previewContainer.find(".body.overflowable")[0];
+		if (preview.type === "link") {
+			const head = previewContainer.find(".head .overflowable")[0];
+			const body = previewContainer.find(".body.overflowable")[0];
 
-		if (preview.type === "link" &&
-				(head && head.scrollWidth > head.offsetWidth) ||
-				(body && body.scrollWidth > body.offsetWidth)) {
-			previewContainer.find(".more").show();
-		} else {
-			previewContainer.find(".toggle-text").removeClass("opened");
-			previewContainer.find(".more").hide();
+			if ((head && head.scrollWidth > head.offsetWidth) ||
+					(body && body.scrollWidth > body.offsetWidth)) {
+				previewContainer.find(".more").show();
+			} else {
+				previewContainer.find(".toggle-content").removeClass("opened");
+				previewContainer.find(".more").attr("aria-expanded", false).hide();
+			}
 		}
 	};
 
@@ -115,7 +116,8 @@ $("#chat").on("click", ".text .toggle-button", function() {
 });
 
 $("#chat").on("click", ".toggle-content .more", function() {
-	$(this).closest(".toggle-text").toggleClass("opened");
+	$(this).closest(".toggle-content").toggleClass("opened");
+	$(this).attr("aria-expanded", $(this).attr("aria-expanded") !== "true");
 	return false;
 });
 
