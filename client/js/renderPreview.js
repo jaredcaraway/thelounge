@@ -66,17 +66,19 @@ function appendPreview(preview, msg, template) {
 
 	previewContainer.append(template);
 
+	const moreBtn = previewContainer.find(".more");
+	const previewContent = previewContainer.find(".toggle-content")[0];
+
 	const showMoreIfNeeded = () => {
 		if (preview.type === "link") {
-			const head = previewContainer.find(".head .overflowable")[0];
-			const body = previewContainer.find(".body.overflowable")[0];
+			const isVisible = moreBtn.is(":visible");
+			const shouldShow = previewContent.offsetWidth >= previewContainer[0].offsetWidth;
 
-			if ((head && head.scrollWidth > head.offsetWidth) ||
-					(body && body.scrollWidth > body.offsetWidth)) {
-				previewContainer.find(".more").show();
-			} else {
-				previewContainer.find(".toggle-content").removeClass("opened");
-				previewContainer.find(".more").attr("aria-expanded", false).hide();
+			if (!isVisible && shouldShow) {
+				moreBtn.show();
+			} else if (isVisible && !shouldShow) {
+				togglePreviewMore(moreBtn, false);
+				moreBtn.hide();
 			}
 		}
 	};
@@ -116,10 +118,22 @@ $("#chat").on("click", ".text .toggle-button", function() {
 });
 
 $("#chat").on("click", ".toggle-content .more", function() {
-	$(this).closest(".toggle-content").toggleClass("opened");
-	$(this).attr("aria-expanded", $(this).attr("aria-expanded") !== "true");
+	togglePreviewMore($(this));
 	return false;
 });
+
+function togglePreviewMore(moreBtn, state = undefined) {
+	moreBtn.closest(".toggle-content").toggleClass("opened", state);
+	const isExpanded = moreBtn.closest(".toggle-content").hasClass("opened");
+
+	moreBtn.attr("aria-expanded", isExpanded);
+
+	if (isExpanded) {
+		moreBtn.attr("aria-label", moreBtn.data("opened-text"));
+	} else {
+		moreBtn.attr("aria-label", moreBtn.data("closed-text"));
+	}
+}
 
 /* Image viewer */
 

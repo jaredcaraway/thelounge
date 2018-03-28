@@ -33,6 +33,7 @@
 
 				<button class="more"
 					aria-expanded="false"
+					aria-label="More"
 					data-closed-text="More"
 					data-opened-text="Less"
 				>
@@ -70,6 +71,7 @@
 
 			<button class="more"
 				aria-expanded="false"
+				aria-label="More"
 				data-closed-text="More"
 				data-opened-text="Less"
 			>

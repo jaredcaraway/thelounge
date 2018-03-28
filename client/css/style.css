@@ -1436,11 +1436,7 @@ kbd {
 }
 
 #chat .toggle-content .more::after {
-	content: attr(data-closed-text);
-}
-
-#chat .toggle-content.opened .more::after {
-	content: attr(data-opened-text);
+	content: attr(aria-label);
 }
 
 #chat .toggle-content .more-caret {
